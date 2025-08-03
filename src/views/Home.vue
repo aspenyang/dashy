@@ -18,13 +18,25 @@
         <span>Back to All</span>
       </router-link>
     </div>
-    <!-- Tag Section -->
-    <div class="tags-panel">
-      <button @click="tagsExpanded = !tagsExpanded" class="tags-toggle">
-        {{ tagsExpanded ? 'Hide Tags' : 'Show All Tags' }}
+
+    <!-- Tag Panel -->
+    <div class="tags-panel-anchor">
+      <button class="open-tags-panel-btn" @click="tagsExpanded = !tagsExpanded">
+       {{ tagsExpanded ? 'Hide Tags' : 'Show All Tags' }}
       </button>
-      <div v-if="tagsExpanded" class="tags-list">
-        <span v-for="tag in allTags" :key="tag" class="tag-chip">{{ tag }}</span>
+      <div v-if="tagsExpanded" class="tags-panel-float" @click.self="tagsExpanded = false">
+        <div class="tags-panel-content">
+          <div class="tags-panel-header">
+            <span>Filter by Tags</span>
+            <button class="close-btn" @click="tagsExpanded = false">&times;</button>
+          </div>
+          <div class="tags-list">
+            <label v-for="tag in allTags" :key="tag" class="tag-checkbox">
+              <input type="checkbox" :value="tag" v-model="selectedTags" />
+              <span class="tag-chip">{{ tag }}</span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -89,12 +101,15 @@ export default {
     Section,
     BackIcon,
   },
-  data: () => ({
-    layout: '',
-    itemSizeBound: '',
-    addNewSectionOpen: false,
-    tagsExpanded: false, // for toggling tag visibility
-  }),
+  data() {
+    return {
+      tagsExpanded: false,
+      selectedTags: [],
+      layout: '',
+      itemSizeBound: '',
+      addNewSectionOpen: false,
+    };
+  },
   computed: {
     singleSectionView() {
       return this.findSingleSection(this.$store.getters.sections, this.$route.params.section);
@@ -350,4 +365,136 @@ section.settings-outer {
   }
 }
 
+/* Floating Tag Panel Overlay */
+.tags-panel-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 1200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  .tags-panel-content {
+    background: var(--background);
+    margin-top: 4rem;
+    border-radius: var(--curve-factor-navbar);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    padding: 1.5rem 2rem;
+    min-width: 320px;
+    max-width: 90vw;
+    max-height: 60vh;
+    overflow-y: auto;
+
+    .tags-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--interactive-editor-color);
+      cursor: pointer;
+    }
+    .tags-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .tag-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1rem;
+    }
+    .tag-chip {
+      background: var(--primary);
+      color: #fff;
+      border-radius: 1rem;
+      padding: 0.15rem 0.7rem;
+      font-size: 0.95rem;
+      user-select: text;
+      white-space: nowrap;
+    }
+  }
+}
+
+.tags-panel-anchor {
+  position: relative;
+  display: inline-block; // or block, as needed
+}
+
+.open-tags-panel-btn {
+  // Remove position: fixed;
+  background: var(--interactive-editor-background);
+  color: var(--interactive-editor-color);
+  border: 1px solid var(--interactive-editor-color);
+  border-radius: var(--curve-factor);
+  padding: 0.4rem 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 1;
+}
+
+.tags-panel-float {
+  position: absolute;
+  top: 110%; // just below the button
+  left: 0;
+  z-index: 1200;
+  background: rgba(0,0,0,0.18);
+  width: max-content;
+  min-width: 320px;
+  max-width: 90vw;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+
+.tags-panel-content {
+  background: var(--background);
+  border-radius: var(--curve-factor-navbar);
+  padding: 1.5rem 2rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  min-width: 320px;
+}
+
+.tags-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--interactive-editor-color);
+  cursor: pointer;
+}
+.tags-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.tag-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+}
+.tag-chip {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 1rem;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.95rem;
+  user-select: text;
+  white-space: nowrap;
+}
 </style>
