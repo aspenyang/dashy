@@ -58,3 +58,9 @@ sections:
         tags:
           - uow
         id: 7_1481_moodle
+      - title: LinkedIn
+        url: https://www.linkedin.com/feed
+        target: newtab
+        tags:
+          - job
+        id: 8_1481_linkedin
