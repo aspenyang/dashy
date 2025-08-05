@@ -134,8 +134,30 @@ export default {
     filteredSections() {
       const sections = this.singleSectionView || this.sections;
       return sections.map((_section) => {
-        const section = _section;
-        section.filteredItems = this.filterTiles(section.items, this.searchValue);
+        const section = { ..._section };
+        // 1. Start with all items
+        let items = section.items || [];
+
+        // 2. Tag filtering
+        if (this.selectedTags.length) {
+          items = items.filter(item => {
+            if (!item.tags) return false;
+            if (this.tagFilterAnd) {
+              // AND: must have all selected tags
+              return this.selectedTags.every(tag => item.tags.includes(tag));
+            } else {
+              // OR: must have at least one selected tag
+              return this.selectedTags.some(tag => item.tags.includes(tag));
+            }
+          });
+        }
+
+        // 3. Search filtering
+        if (this.searchValue) {
+          items = this.filterTiles(items, this.searchValue);
+        }
+
+        section.filteredItems = items;
         return section;
       });
     },
