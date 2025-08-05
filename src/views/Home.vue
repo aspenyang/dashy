@@ -318,33 +318,33 @@ export default {
   }
 }
 
-/* Basic styles for tags panel */
-  .tags-panel {
-    margin: 1rem 0;
-    .tags-toggle {
-      background: var(--interactive-editor-background);
-      color: var(--interactive-editor-color);
-      border: 1px solid var(--interactive-editor-color);
-      border-radius: var(--curve-factor);
-      padding: 0.3rem 1rem;
-      cursor: pointer;
-      margin-bottom: 0.5rem;
-    }
-    .tags-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    .tag-chip {
-      background: var(--primary);
-      color: #fff;
-      border-radius: 1rem;
-      padding: 0.2rem 0.8rem;
-      font-size: 0.95rem;
-      user-select: text;
-    }
-  }
+// /* Basic styles for tags panel */
+//   .tags-panel {
+//     margin: 1rem 0;
+//     .tags-toggle {
+//       background: var(--interactive-editor-background);
+//       color: var(--interactive-editor-color);
+//       border: 1px solid var(--interactive-editor-color);
+//       border-radius: var(--curve-factor);
+//       padding: 0.3rem 1rem;
+//       cursor: pointer;
+//       margin-bottom: 0.5rem;
+//     }
+//     .tags-list {
+//       display: flex;
+//       flex-wrap: wrap;
+//       gap: 0.5rem;
+//       margin-top: 0.5rem;
+//     }
+//     .tag-chip {
+//       background: var(--primary);
+//       color: #fff;
+//       border-radius: 1rem;
+//       padding: 0.2rem 0.8rem;
+//       font-size: 0.95rem;
+//       user-select: text;
+//     }
+//   }
 
 /* Custom styles only applied when there is no sections in config */
 .no-data {
@@ -375,54 +375,6 @@ section.settings-outer {
   align-items: flex-start;
   justify-content: center;
 
-  .tags-panel-content {
-    background: var(--background);
-    margin-top: 4rem;
-    border-radius: var(--curve-factor-navbar);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    padding: 1.5rem 2rem;
-    min-width: 320px;
-    max-width: 90vw;
-    max-height: 60vh;
-    overflow-y: auto;
-
-    // .tags-panel-header {
-    //   display: flex;
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   margin-bottom: 1rem;
-    //   font-size: 1.2rem;
-    //   font-weight: bold;
-    //   color: var(--interactive-editor-color);
-    // }
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--interactive-editor-color);
-      cursor: pointer;
-    }
-    .tags-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .tag-checkbox {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 1rem;
-    }
-    .tag-chip {
-      background: var(--primary);
-      color: #fff;
-      border-radius: 1rem;
-      padding: 0.15rem 0.7rem;
-      font-size: 0.95rem;
-      user-select: text;
-      white-space: nowrap;
-    }
-  }
 }
 
 .tags-panel-anchor {
@@ -492,7 +444,7 @@ section.settings-outer {
 }
 .tag-chip {
   background: var(--primary);
-  color: #fff;
+  color: var(--interactive-editor-background);
   border-radius: 1rem;
   padding: 0.15rem 0.7rem;
   font-size: 0.95rem;
