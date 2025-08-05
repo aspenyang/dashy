@@ -30,6 +30,14 @@
             <span>Filter by Tags</span>
             <button class="close-btn" @click="tagsExpanded = false">&times;</button>
           </div>
+          <!-- Tag filter mode switch (or filter/and filter) -->
+          <div class="tag-filter-switch">
+            <label>
+              <input type="checkbox" v-model="tagFilterAnd" />
+              Match all selected tags
+            </label>
+          </div>
+          <!-- List of tags with checkboxes -->
           <div class="tags-list">
             <label v-for="tag in allTags" :key="tag" class="tag-checkbox">
               <input type="checkbox" :value="tag" v-model="selectedTags" />
@@ -450,5 +458,19 @@ section.settings-outer {
   font-size: 0.95rem;
   user-select: text;
   white-space: nowrap;
+}
+.tag-filter-switch {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-align: right;
+  label {
+    cursor: pointer;
+    user-select: none;
+    color: var(--interactive-editor-color);
+  }
+  input[type="checkbox"] {
+    margin-right: 0.5em;
+    accent-color: var(--primary);
+  }
 }
 </style>
