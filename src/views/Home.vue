@@ -326,34 +326,6 @@ export default {
   }
 }
 
-// /* Basic styles for tags panel */
-//   .tags-panel {
-//     margin: 1rem 0;
-//     .tags-toggle {
-//       background: var(--interactive-editor-background);
-//       color: var(--interactive-editor-color);
-//       border: 1px solid var(--interactive-editor-color);
-//       border-radius: var(--curve-factor);
-//       padding: 0.3rem 1rem;
-//       cursor: pointer;
-//       margin-bottom: 0.5rem;
-//     }
-//     .tags-list {
-//       display: flex;
-//       flex-wrap: wrap;
-//       gap: 0.5rem;
-//       margin-top: 0.5rem;
-//     }
-//     .tag-chip {
-//       background: var(--primary);
-//       color: #fff;
-//       border-radius: 1rem;
-//       padding: 0.2rem 0.8rem;
-//       font-size: 0.95rem;
-//       user-select: text;
-//     }
-//   }
-
 /* Custom styles only applied when there is no sections in config */
 .no-data {
     font-size: 2rem;
