@@ -386,14 +386,15 @@ section.settings-outer {
     max-height: 60vh;
     overflow-y: auto;
 
-    .tags-panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+    // .tags-panel-header {
+    //   display: flex;
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   margin-bottom: 1rem;
+    //   font-size: 1.2rem;
+    //   font-weight: bold;
+    //   color: var(--interactive-editor-color);
+    // }
     .close-btn {
       background: none;
       border: none;
@@ -469,6 +470,7 @@ section.settings-outer {
   margin-bottom: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
+  color: var(--interactive-editor-color);
 }
 .close-btn {
   background: none;
