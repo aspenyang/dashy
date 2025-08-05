@@ -116,6 +116,7 @@ export default {
       layout: '',
       itemSizeBound: '',
       addNewSectionOpen: false,
+      tagFilterAnd: false,
     };
   },
   computed: {
