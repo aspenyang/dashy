@@ -30,6 +30,10 @@
             <span>Filter by Tags</span>
             <button class="close-btn" @click="tagsExpanded = false">&times;</button>
           </div>
+          <!-- 💡 Clear button -->
+          <div class="tag-clear-button">
+            <button @click="clearSelectedTags">Clear Tags</button>
+          </div>
           <!-- Tag filter mode switch (or filter/and filter) -->
           <div class="tag-filter-switch">
             <label>
@@ -37,6 +41,7 @@
               Match all selected tags
             </label>
           </div>
+
           <!-- List of tags with checkboxes -->
           <div class="tags-list">
             <label v-for="tag in allTags" :key="tag" class="tag-checkbox">
@@ -237,6 +242,9 @@ export default {
       }
       availibleThemes.Default = '#';
       return availibleThemes;
+    },
+    clearSelectedTags() {
+      this.selectedTags = [];
     },
   },
   mounted() {
@@ -468,4 +476,24 @@ section.settings-outer {
     accent-color: var(--primary);
   }
 }
+.tag-clear-button {
+  // text-align: right;
+  margin-bottom: 1rem;
+
+  button {
+    background: none;
+    border: 1px solid var(--interactive-editor-color);
+    color: var(--interactive-editor-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--curve-factor);
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--interactive-editor-color);
+      color: var(--interactive-editor-background);
+    }
+  }
+}
+
 </style>
