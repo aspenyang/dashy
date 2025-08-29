@@ -1,7 +1,3 @@
-// ...existing code...
-  methods: {
-
-    },
 <template>
   <div class = "search-settings-row">
     <form
@@ -19,12 +15,13 @@
           :placeholder="$t('search.search-placeholder')"
           v-on:input="userIsTypingSomething"
           @keydown.esc="clearFilterInput"
+          @keydown="handleInputKeydown"
         />
         <p
-          v-if="(!searchPrefs.disableWebSearch) && input.length > 0"
+          v-if="getSearchHint()"
           class="web-search-note"
         >
-          {{ $t('search.enter-to-search-web') }}
+          {{ getSearchHint() }}
         </p>
       </div>
       <i
@@ -110,6 +107,29 @@ export default {
     window.removeEventListener('keydown', this.handleKeyPress);
   },
   methods: {
+    // Handle Shift+Enter for go-to-link
+    handleInputKeydown(e) {
+      // Ctrl+Enter: go to link if enabled and input is link-like
+      if (
+        this.goToLinkEnabled &&
+        e.key === 'Enter' &&
+        (e.ctrlKey || e.metaKey) &&
+        this.isUrlLike(this.input) &&
+        this.input.trim().length > 0
+      ) {
+        e.preventDefault();
+        this.goToLink();
+      }
+    },
+
+    // Open the link in a new tab
+    goToLink() {
+      const input = this.input.trim();
+      if (this.isUrlLike(input)) {
+        window.open(this.normalizeUrl(input), '_blank');
+        this.clearFilterInput();
+      }
+    },
     toggleDisableWebSearch(event) {
       const value = event.target.checked;
       const newAppConfig = {
@@ -185,15 +205,9 @@ export default {
 
     /* Launch web search, to correct search engine, passing in users query */
     searchSubmitted() {
-      const { searchPrefs, goToLinkEnabled } = this;
+      // Only handle web search if enabled
+      const { searchPrefs } = this;
       const input = this.input.trim();
-      // 1. If "Go to Link" is enabled and input is URL-like, always open as link
-      if (goToLinkEnabled && this.isUrlLike(input)) {
-        window.open(this.normalizeUrl(input), '_blank');
-        this.clearFilterInput();
-        return;
-      }
-      // 2. If not URL-like, or "Go to Link" is disabled, only search if web search is enabled
       if (!searchPrefs.disableWebSearch) {
         const bangList = { ...defaultSearchBangs, ...(searchPrefs.searchBangs || {}) };
         const openingMethod = searchPrefs.openingMethod || defaultSearchOpeningMethod;
@@ -210,6 +224,25 @@ export default {
           this.clearFilterInput();
         }
       }
+    },
+
+    // Dynamic hint logic for the search bar
+    getSearchHint() {
+      const input = this.input.trim();
+      const isLink = this.isUrlLike(input) && input.length > 0;
+      const web = !this.searchPrefs.disableWebSearch;
+      const link = this.goToLinkEnabled && isLink;
+      const ctrlOrCmd = navigator.platform.includes('Mac') ? 'Cmd+Enter' : 'Ctrl+Enter';
+      if (web && link) {
+        return `Press Enter to search the web, ${ctrlOrCmd} to go to link`;
+      }
+      if (web && input.length > 0) {
+        return this.$t('search.enter-to-search-web');
+      }
+      if (link) {
+        return `Press ${ctrlOrCmd} to go to the link`;
+      }
+      return '';
     },
     // Utility: Detect if input is a URL or domain-like string
     isUrlLike(input) {
